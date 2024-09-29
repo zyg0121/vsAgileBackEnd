@@ -9,9 +9,31 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.xiaominfo.knife4j.demo.web
+      packages-to-scan: com.bytewizard.vsagilebackend.controller
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: true
   setting:
     language: zh_cn
+
+# database configuration
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/vsagile?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8
+    username: admin
+    password: 'Cityu2024!'
+  # jpa:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# logging configuration
+logging:
+    file:
+      path: ./logs
+    level:
+      com.bytewizard: debug
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/xml/*.xml
