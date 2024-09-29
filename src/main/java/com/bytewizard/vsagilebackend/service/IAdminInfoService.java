@@ -16,4 +16,10 @@ import java.util.List;
 public interface IAdminInfoService extends IService<AdminInfo> {
     public List<AdminInfo> getAdminInfoById(String adminId);
 
+    public boolean insertAdminInfo(AdminInfo adminInfo);
+
+    public boolean updateAdminInfo(AdminInfo adminInfo);
+
+    public boolean deleteAdminInfo(String adminId);
+
 }
