@@ -26,7 +26,7 @@ import java.util.List;
 public class AdminInfoController {
 
     @Resource
-    private IAdminInfoService adminInfoService;
+    private IAdminInfoService adminInfoService; // Service layer
 
     @Operation(summary = "Get admin info by adminId")
     @Parameter(name = "adminId", description = "adminId", required = true)
