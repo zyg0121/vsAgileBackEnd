@@ -27,7 +27,7 @@ public interface ITbUserService extends IService<TbUser> {
     Integer deleteUser(Integer delUserId);
 
     // Update a user by id
-    Integer updateUser(TbUser tbUser);
+    Integer updateUser(UserVO userVO);
 
     // Get a user by id
     UserVO getUserById(Integer userId);
