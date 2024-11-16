@@ -98,18 +98,18 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
     }
 
     @Override
-    public Integer updateUser(TbUser tbUser) {
+    public Integer updateUser(UserVO userVO) {
         // 1.判断用户是否存在
-        TbUser user = tbUserMapper.selectById(tbUser.getUserId());
+        TbUser user = tbUserMapper.selectById(userVO.getUserId());
         if (user == null) {
             return -1;
         }
         TbUser newUser = new TbUser();
-        newUser.setUserId(tbUser.getUserId());
-        newUser.setUserName(tbUser.getUserName());
-        newUser.setUserNickname(tbUser.getUserNickname());
-        newUser.setUserEmail(tbUser.getUserEmail());
-        newUser.setUserRole(tbUser.getUserRole());
+        newUser.setUserId(userVO.getUserId());
+        newUser.setUserName(userVO.getUserName());
+        newUser.setUserNickname(userVO.getUserNickname());
+        newUser.setUserEmail(userVO.getUserEmail());
+        newUser.setUserRole(userVO.getUserRole());
         // 2.更新用户信息
         int result = tbUserMapper.updateById(newUser);
         // 3.返回更新结果

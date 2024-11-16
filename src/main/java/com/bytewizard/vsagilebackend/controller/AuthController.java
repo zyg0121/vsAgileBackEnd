@@ -38,7 +38,7 @@ public class AuthController {
         if (result != null && result > 0) {
             // 生成 JWT Token
             String token = JwtUtil.generateToken(userName);
-            return new ServerResult(200, "登录成功", token);
+            return new ServerResult(200, "登录成功", "Bearer " + token);
         } else {
             return new ServerResult(101, "登录失败", null);
         }

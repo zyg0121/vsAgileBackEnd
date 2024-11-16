@@ -60,7 +60,7 @@ public class TbUserController {
     }
 
     @PutMapping
-    public ServerResult updateUser(@RequestBody TbUser user, @RequestHeader("Authorization") String token) {
+    public ServerResult updateUser(@RequestBody UserVO user, @RequestHeader("Authorization") String token) {
         // 去掉 "Bearer " 前缀，提取实际的 JWT Token
         token = token.substring(7);
 
