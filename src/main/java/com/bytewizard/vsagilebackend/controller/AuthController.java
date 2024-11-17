@@ -2,11 +2,14 @@ package com.bytewizard.vsagilebackend.controller;
 
 import com.bytewizard.vsagilebackend.entity.ServerResult;
 import com.bytewizard.vsagilebackend.entity.UserDTO;
+import com.bytewizard.vsagilebackend.entity.UserVO;
 import com.bytewizard.vsagilebackend.service.ITbUserService;
 import com.bytewizard.vsagilebackend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -33,14 +36,23 @@ public class AuthController {
 
     // 用户登录
     @PostMapping("/login")
-    public ServerResult login(String userName, String userPwd) {
+    public ServerResult login(@RequestBody Map<String, String> loginData) {
+        // 处理userName和userPwd的特别情况
+        String userName = loginData.get("userName");
+        String userPwd = loginData.get("userPwd");
+        if (userName == null || userName.isEmpty() || userPwd == null || userPwd.isEmpty()) {
+            return new ServerResult(401, "用户名或密码不能为空", null);
+        }
         Integer result = userService.login(userName, userPwd);
         if (result != null && result > 0) {
             // 生成 JWT Token
             String token = JwtUtil.generateToken(userName);
-            return new ServerResult(200, "登录成功", "Bearer " + token);
+            // 获取用户的信息
+            UserVO user = userService.getUserById(result);
+            // 打包返回到接口 包括用户信息和 Token
+            return new ServerResult(200, "登录成功", Map.of("token", "Bearer " + token, "user", user));
         } else {
-            return new ServerResult(101, "登录失败", null);
+            return new ServerResult(101, "登录失败,请检查用户名或密码", null);
         }
     }
 }
