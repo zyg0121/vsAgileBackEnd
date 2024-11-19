@@ -16,5 +16,26 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TbProjectServiceImpl extends ServiceImpl<TbProjectMapper, TbProject> implements ITbProjectService {
-
+    TbProjectMapper tbProjectMapper;
+    public TbProjectServiceImpl(TbProjectMapper tbProjectMapper) {
+        this.tbProjectMapper = tbProjectMapper;
+    }
+    @Override
+    public TbProject getProjectById(Integer projectId) {
+        TbProject project = tbProjectMapper.selectById(projectId);
+        //check if the project exists
+        if (project == null) {
+            return null;
+        }
+        //return project info
+        TbProject projectVO = new TbProject();
+        projectVO.setProjectId(project.getProjectId());
+        projectVO.setProjectName(project.getProjectName());
+        projectVO.setProjectPmId(project.getProjectPmId());
+        projectVO.setProjectDesc(project.getProjectDesc());
+        projectVO.setProjectStartTime(project.getProjectStartTime());
+        projectVO.setProjectEndTime(project.getProjectEndTime());
+        projectVO.setProjectStatus(project.getProjectStatus());
+        return projectVO;
+    }
 }
