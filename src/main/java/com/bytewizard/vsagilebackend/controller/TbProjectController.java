@@ -1,6 +1,9 @@
 package com.bytewizard.vsagilebackend.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.bytewizard.vsagilebackend.entity.ServerResult;
+import com.bytewizard.vsagilebackend.entity.TbProject;
+import com.bytewizard.vsagilebackend.service.ITbProjectService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -11,8 +14,24 @@ import org.springframework.stereotype.Controller;
  * @author byteWizard
  * @since 2024-11-15
  */
-@Controller
-@RequestMapping("/tbProject")
+@RestController
+@CrossOrigin
+@RequestMapping("/project")
 public class TbProjectController {
 
+    public ITbProjectService tbProjectService;
+
+    public TbProjectController(ITbProjectService tbProjectService) {
+        this.tbProjectService = tbProjectService;
+    }
+
+    @GetMapping("/{projectId}")
+    public ServerResult getProjects(@PathVariable Integer projectId) {
+        TbProject currentProject = tbProjectService.getProjectById(projectId);
+        //check if current project exists
+        if (currentProject == null) {
+            return new ServerResult(401, "Unauthorized", null);
+        }
+        return new ServerResult(200, "OK", currentProject);
+    }
 }
