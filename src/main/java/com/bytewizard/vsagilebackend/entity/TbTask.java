@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,13 +33,16 @@ public class TbTask implements Serializable {
 
     private Integer taskUserId;
 
-    private String taskPos;
+    private String taskPriority;
 
-    private Integer taskPriority;
-
+    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime taskStartTime;
 
+    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime taskEndTime;
+
+    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime taskPreEndTime;
 
     private String taskDesc;
 
