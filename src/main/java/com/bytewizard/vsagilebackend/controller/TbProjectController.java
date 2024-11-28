@@ -37,7 +37,7 @@ public class TbProjectController {
         this.tbProjectService = tbProjectService;
     }
 
-    @PostMapping("/project")
+    @PostMapping
     public ServerResult createProject(@RequestBody ProjectDTO projectDTO, @RequestHeader("Authorization") String token) {
         token = token.substring(7);
         String username = JwtUtil.extractUsername(token);
