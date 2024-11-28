@@ -1,32 +1,14 @@
 package com.bytewizard.vsagilebackend.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author byteWizard
- * @since 2024-11-15
- */
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@TableName("tb_project")
-public class TbProject implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @TableId("project_id")
-    private Integer projectId;
-
+public class ProjectDTO {
     private String projectName;
 
     private Integer projectPmId;
