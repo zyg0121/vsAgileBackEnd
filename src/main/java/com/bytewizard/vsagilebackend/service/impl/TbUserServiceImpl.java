@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <p>
  *  服务实现类
@@ -74,7 +77,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
 
             if (passwordEncoder.matches(userPwd, user.getUserPwd())) {
                 System.out.println("密码匹配成功");
-                return 1; // 登录成功
+                return user.getUserId(); // 登录成功
             } else {
                 System.out.println("密码匹配失败");
             }
@@ -151,9 +154,29 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
     }
 
     @Override
-    public IPage<TbUser> getAllUsers(Integer pageNum, Integer pageSize) {
-        // 返回所有用户信息
-        return tbUserMapper.selectPage(new Page<>(pageNum, pageSize), null);
+    public IPage<UserVO> getAllUsers(Integer pageNum, Integer pageSize) {
+        // 获取分页的 TbUser 列表
+        IPage<TbUser> tbUserPage = tbUserMapper.selectPage(new Page<>(pageNum, pageSize), null);
+
+        // 将 TbUser 转换为 UserVO
+        IPage<UserVO> userVOPage = new Page<>(pageNum, pageSize, tbUserPage.getTotal());
+        userVOPage.setCurrent(tbUserPage.getCurrent());
+        userVOPage.setPages(tbUserPage.getPages());
+        userVOPage.setSize(tbUserPage.getSize());
+        userVOPage.setTotal(tbUserPage.getTotal());
+
+        List<UserVO> userVOList = tbUserPage.getRecords().stream().map(user -> {
+            UserVO userVO = new UserVO();
+            userVO.setUserId(user.getUserId());
+            userVO.setUserName(user.getUserName());
+            userVO.setUserNickname(user.getUserNickname());
+            userVO.setUserEmail(user.getUserEmail());
+            userVO.setUserRole(user.getUserRole());
+            return userVO;
+        }).collect(Collectors.toList());
+        userVOPage.setRecords(userVOList);
+
+        return userVOPage;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bytewizard.vsagilebackend.service.impl;
 
+import com.bytewizard.vsagilebackend.entity.TaskDTO;
 import com.bytewizard.vsagilebackend.entity.TbTask;
 import com.bytewizard.vsagilebackend.mapper.TbTaskMapper;
 import com.bytewizard.vsagilebackend.service.ITbTaskService;
@@ -28,12 +29,24 @@ public class TbTaskServiceImpl extends ServiceImpl<TbTaskMapper, TbTask> impleme
     }
 
     @Override
-    public Integer CreateTask(TbTask tbTask) {
-        tbTaskMapper.insert(tbTask);
-        if (tbTask.getTaskId() == null)
-            return -1;
+    public Integer CreateTask(TaskDTO taskDTO) {
+        // 1. Create a new TbTask object
+        TbTask tbTask = new TbTask();
+        tbTask.setTaskTitle(taskDTO.getTaskTitle());
+        tbTask.setTaskProjectId(taskDTO.getTaskProjectId());
+        tbTask.setTaskUserId(taskDTO.getTaskUserId());
+        tbTask.setTaskPriority(taskDTO.getTaskPriority());
+        tbTask.setTaskStartTime(taskDTO.getTaskStartTime());
+        tbTask.setTaskEndTime(taskDTO.getTaskEndTime());
+        tbTask.setTaskPreEndTime(taskDTO.getTaskPreEndTime());
+        tbTask.setTaskDesc(taskDTO.getTaskDesc());
+        tbTask.setTaskStatus(taskDTO.getTaskStatus());
 
-        return tbTask.getTaskId();
+        // 2. Insert the new task into the database
+        int result = tbTaskMapper.insert(tbTask);
+
+        // 3. Return the task ID if insertion was successful, otherwise return -1
+        return result > 0 ? tbTask.getTaskId() : -1;
     }
 
     @Override
