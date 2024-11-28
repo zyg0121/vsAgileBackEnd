@@ -36,5 +36,5 @@ public interface ITbUserService extends IService<TbUser> {
     UserVO getUserByUsername(String username);
 
     // Get all users
-    IPage<TbUser> getAllUsers(Integer pageNum, Integer pageSize);
+    IPage<UserVO> getAllUsers(Integer pageNum, Integer pageSize);
 }

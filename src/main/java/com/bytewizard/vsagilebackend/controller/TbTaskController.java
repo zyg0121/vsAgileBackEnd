@@ -1,6 +1,7 @@
 package com.bytewizard.vsagilebackend.controller;
 
 import com.bytewizard.vsagilebackend.entity.ServerResult;
+import com.bytewizard.vsagilebackend.entity.TaskDTO;
 import com.bytewizard.vsagilebackend.entity.TbTask;
 import com.bytewizard.vsagilebackend.entity.UserVO;
 import com.bytewizard.vsagilebackend.service.ITbTaskService;
@@ -29,7 +30,7 @@ public class TbTaskController {
     private ITbUserService tbUserService;
 
     @PostMapping("/task")
-    public ServerResult createTask(@RequestBody TbTask tbTask, @RequestHeader("Authorization") String token) {
+    public ServerResult createTask(@RequestBody TaskDTO taskDTO, @RequestHeader("Authorization") String token) {
         // 去掉 "Bearer " 前缀，提取实际的 JWT Token
         token = token.substring(7);
 
@@ -44,9 +45,9 @@ public class TbTaskController {
             return new ServerResult(403, "Forbidden: Only administrators can create task", -1);
         }
 
-        Integer result = tbTaskService.CreateTask(tbTask);
+        Integer result = tbTaskService.CreateTask(taskDTO);
         if (result != -1) {
-            return new ServerResult(200, "创建任务成功", tbTask);
+            return new ServerResult(200, "创建任务成功", taskDTO);
         }else{
             return new ServerResult(500, "创建任务失败", null);
         }
