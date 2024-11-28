@@ -1,5 +1,6 @@
 package com.bytewizard.vsagilebackend.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class TbTask implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("task_id")
+    @TableId(type = IdType.AUTO, value = "task_id")
     private Integer taskId;
 
     private String taskTitle;
