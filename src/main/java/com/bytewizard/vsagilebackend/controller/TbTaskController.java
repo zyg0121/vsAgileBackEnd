@@ -96,4 +96,26 @@ public class TbTaskController {
             return new ServerResult(500, "Update Task Info Failed", -1);
         }
     }
+
+    @DeleteMapping("/task/{id}")
+    public ServerResult deleteTask(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        token = token.substring(7);
+
+        // 从 Token 中提取用户名
+        String username = JwtUtil.extractUsername(token);
+
+        // 使用用户名查询用户信息
+        UserVO currentUser = tbUserService.getUserByUsername(username);
+
+        // 检查用户是否存在
+        if (currentUser == null) {
+            return new ServerResult(403, "Forbidden: Only administrators can delete task", -1);
+        }
+
+        if (tbTaskService.deleteTask(id)==1) {
+            return new ServerResult(200, "Delete Task", id);
+        } else {
+            return new ServerResult(500, "Delete Task Failed", -1);
+        }
+    }
 }

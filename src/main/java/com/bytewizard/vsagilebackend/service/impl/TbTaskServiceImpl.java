@@ -79,4 +79,17 @@ public class TbTaskServiceImpl extends ServiceImpl<TbTaskMapper, TbTask> impleme
         // 3.返回更新结果
         return result == 0 ? -1 : 1;
     }
+
+    @Override
+    public Integer deleteTask(Integer taskId) {
+        // 1.判断任务是否存在
+        TbTask task = tbTaskMapper.selectById(taskId);
+        if (task == null) {
+            return -1;
+        }
+        // 2.删除任务
+        int result = tbTaskMapper.deleteById(taskId);
+        // 3.返回删除结果
+        return result == 0 ? -1 : 1;
+    }
 }

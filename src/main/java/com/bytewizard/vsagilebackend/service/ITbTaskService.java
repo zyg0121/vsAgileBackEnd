@@ -22,4 +22,6 @@ public interface ITbTaskService extends IService<TbTask> {
     TbTask getTaskById(Integer taskId);
 
     Integer updateTask(TbTask tbTask);
+
+    Integer deleteTask(Integer taskId);
 }
