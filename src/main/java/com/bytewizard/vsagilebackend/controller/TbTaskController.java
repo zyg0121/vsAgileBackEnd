@@ -47,7 +47,7 @@ public class TbTaskController {
 
         Integer result = tbTaskService.CreateTask(taskDTO);
         if (result != -1) {
-            return new ServerResult(200, "创建任务成功", result);
+            return new ServerResult(200, "创建任务成功", taskDTO);
         }else{
             return new ServerResult(500, "创建任务失败", null);
         }
