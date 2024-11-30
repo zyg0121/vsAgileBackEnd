@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.bytewizard.vsagilebackend.entity.UserDTO;
 import com.bytewizard.vsagilebackend.entity.UserVO;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -37,4 +39,6 @@ public interface ITbUserService extends IService<TbUser> {
 
     // Get all users
     IPage<UserVO> getAllUsers(Integer pageNum, Integer pageSize);
+
+    List<UserVO> getAllUsers();
 }

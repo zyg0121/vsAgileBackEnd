@@ -102,5 +102,10 @@ public class TbUserController {
         return new ServerResult(200, "Get User List", tbUserService.getAllUsers(pageNum, pageSize));
     }
 
+    @GetMapping("/getAllUsers")
+    public ServerResult getAllUsers() {
+        return new ServerResult(200, "Get User List", tbUserService.getAllUsers());
+    }
+
 
 }

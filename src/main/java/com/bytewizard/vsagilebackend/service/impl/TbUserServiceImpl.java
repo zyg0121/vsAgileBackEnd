@@ -179,4 +179,19 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
         return userVOPage;
     }
 
+    @Override
+    public List<UserVO> getAllUsers() {
+        // 获取所有用户
+        List<TbUser> tbUserList = tbUserMapper.selectList(null);
+        return tbUserList.stream().map(user -> {
+            UserVO userVO = new UserVO();
+            userVO.setUserId(user.getUserId());
+            userVO.setUserName(user.getUserName());
+            userVO.setUserNickname(user.getUserNickname());
+            userVO.setUserEmail(user.getUserEmail());
+            userVO.setUserRole(user.getUserRole());
+            return userVO;
+        }).collect(Collectors.toList());
+    }
+
 }
