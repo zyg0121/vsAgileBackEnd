@@ -1,5 +1,6 @@
 package com.bytewizard.vsagilebackend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bytewizard.vsagilebackend.entity.TbUser;
@@ -182,7 +183,7 @@ public class TbUserServiceImpl extends ServiceImpl<TbUserMapper, TbUser> impleme
     @Override
     public List<UserVO> getAllUsers() {
         // 获取所有用户
-        List<TbUser> tbUserList = tbUserMapper.selectList(null);
+        List<TbUser> tbUserList = tbUserMapper.selectList(new QueryWrapper<TbUser>().eq("user_role", 0));
         return tbUserList.stream().map(user -> {
             UserVO userVO = new UserVO();
             userVO.setUserId(user.getUserId());
